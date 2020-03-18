@@ -87,7 +87,7 @@ mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'yourpassword!';
 ```
 
 ### 2.3 基本测试
-创建一个数据库
+创建一个数据库test,并退出
 ```
 mysql> create database test;
 Query OK, 1 row affected (0.01 sec)
@@ -104,12 +104,30 @@ mysql> show databases;
 +--------------------+
 5 rows in set (0.00 sec)
 
-mysql> 
+mysql> exit
+Bye
 
 ```
 
 ## 3.容器安装
 ### 3.1 安装
+- 创建所需文件夹   
+```
+mkdir /opt/data/mysql
+mkdir /opt/config/mysql
+```   
+- 拉取镜像安装
+```
+$ docker pull mysql:latest
+
+$ docker run --name mysql \
+    --host mysql \
+    -v /opt/data/mysql:/var/lib/mysql \
+    -v /opt/config/mysql:/etc/mysql/conf.d \
+    -e MYSQL_ROOT_PASSWORD=HuangNing11! \
+    -d mysql:latest
+```
+
 
 ### 3.2 配置
 
@@ -117,4 +135,5 @@ mysql>
 
 
 ### 官方安装文档
-[官方安装文档](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html)
+[压缩包官方安装文档](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html)
+[容器官方安装文档](https://hub.docker.com/_/mysql)

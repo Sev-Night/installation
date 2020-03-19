@@ -46,6 +46,15 @@ sudo yum-config-manager \
 ```
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+[root@localhost ~]# docker version
+Client: Docker Engine - Community
+ Version:           19.03.8
+ API version:       1.40
+ Go version:        go1.12.17
+ Git commit:        afacb8b
+ Built:             Wed Mar 11 01:27:04 2020
+ OS/Arch:           linux/amd64
+ Experimental:      false
 ```
 
 ### 3.3 简单测试 

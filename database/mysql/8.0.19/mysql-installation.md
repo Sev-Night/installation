@@ -121,15 +121,17 @@ mkdir /opt/config/mysql
 $ docker pull mysql:latest
 
 $ docker run --name mysql \
-    --host mysql \
+    -host mysql \
+    -p 3306:3306
     -v /opt/data/mysql:/var/lib/mysql \
     -v /opt/config/mysql:/etc/mysql/conf.d \
     -e MYSQL_ROOT_PASSWORD=HuangNing11! \
     -d mysql:latest
-```
-
-
-### 3.2 配置
+```   
+说明：  
+**a.** -v 将本地/opt/data/mysql挂载到容器中的/var/lib/mysql（默认保存数据的位置）上 ；   
+**b.** -v 将本地的/opt/config/mysql挂载到容器中的/etc/mysql/conf.d（该容器中的）上，config-file.cnf文件会覆盖掉容器中/etc/mysql/my.cnf的相同项配置。
+**c.** -e 通过设置环境变量的方式修改配置。
 
 ### 3.3 基本测试 
 
@@ -137,3 +139,84 @@ $ docker run --name mysql \
 ### 官方安装文档
 [压缩包官方安装文档](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html)
 [容器官方安装文档](https://hub.docker.com/_/mysql)
+
+## 补充Mysql配置文档模板   
+需要找到官方配置文档模板
+```
+[client]
+port=3306
+socket=/var/lib/mysql/mysql.sock
+[mysql]
+default-character-set=utf8
+[mysqld]
+user=mysql
+port=3306
+character-set-server=utf8
+basedir=/usr/local/mysql
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+log-error =/var/log/mysqld.log
+#是否开启慢查询日志，默认状态为开启，1 ，关闭 0
+slow_query_log
+#慢查询日志得超时时间
+long_query_time=3
+#是否记录不使用索引得查询记录（将会写入到慢查询日志中）
+log_queries_not_using_indexes = 0
+#慢查询日志得日志路径，需配合上面参数使用
+log-slow-queries=/usr/local/mysql/log/log-slow-queries.log
+pid-file =/data/mysqldata/mysql.pid
+#设置默认数据库引擎
+default-storage-engine=INNODB
+#设置sql模式：禁止grant创建密码为空得用户，如果需要的存储引擎被禁用或未编译，那么抛出错误，一种严格得select查询GROUP BY操作，详细可参考网络上得解释
+sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION，ONLY_FULL_GROUP_BY"
+#最大连接数
+max_connections=300
+#指定查询结果缓存大小
+query_cache_size=32M
+#指定表的高速缓存，每打开一个表，表都会放入这里，可以加速访问，此值设置可以参考open_tables的值，若两者相等，则此值应该增加
+table_open_cache=512
+#设置线程缓存数，此值小的话，MySQL频繁创建线程，会消耗资源，配置的值参考：1G 8 、2G 16 、3G 32 。。。
+thread_cache_size=38
+#如果临时文件会变得超过索引，不要使用快速排序索引方法来创建一个索引
+myisam_max_sort_file_size=1G
+#MyISAM设置恢复表之时使用的缓冲区，REPAIR TABLE或用CREATE INDEX创建索引或ALTER TABLE过程中排序 MyISAM索引分配的缓冲区
+myisam_sort_buffer_size=64M 
+#设置索引块的缓冲区大小
+key_buffer_size=290M 
+#读查询操作的缓冲区大小
+read_buffer_size = 1M 
+#设置随机读缓冲区大小
+read_rnd_buffer_size = 8M 
+#设置MySQL执行排序的时候使用的大小
+sort_buffer_size = 1M 
+#如下注解
+innodb_flush_log_at_trx_commit=2 
+#innodb日志缓冲区大小，建议为1-8M
+innodb_log_buffer_size=4M 
+#innodb缓冲区大小，此值越大，可以减少磁盘IO，一般设置为内存的80%
+innodb_buffer_pool_size=2G 
+#设置innodb的日志文件大小，过大的话，将来做数据恢复会很慢
+innodb_log_file_size=512M
+# 并发数限制，设置为0则表示不限制并发
+innodb_thread_concurrency=18 
+#设置innodb为独立表空间模式，也就是每个表单独使用一个表空间，易于维护，
+innodb_file_per_table = 1 
+#设置innodb文件格式
+innodb_file_format = Barracuda
+#交互式连接的超时时间，单位为秒，默认8小时
+interactive_timeout = 86400
+#非交互式连接的超时时间
+wait_timeout = 2147482 
+#最大允许的包大小，
+max_allowed_packet = 12M
+#不使用DNS对连接进行解析
+skip_name_resolve 
+#以下两个选项用来设置读写IO的线程数，根据CPU核数来设置
+innodb_write_io_threads = 4
+innodb_read_io_threads = 4
+# binlog
+log-bin = /data/mysqldata/mysql-client-bin
+server-id= 1
+[mysqldump]  
+max_allowed_packet = 512M
+```

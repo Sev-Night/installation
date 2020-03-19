@@ -121,6 +121,7 @@ mkdir /opt/config/mysql
 $ docker pull mysql:latest
 
 $ docker run --name mysql \
+    --restart=always \
     -host mysql \
     -p 3306:3306
     -v /opt/data/mysql:/var/lib/mysql \

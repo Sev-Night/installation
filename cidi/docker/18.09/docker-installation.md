@@ -3,7 +3,19 @@
 - Centos7 虚拟机
 - Xshell 远程连接工具
 ## 2.安装
-### 2.1 配置仓库
+### 2.1 卸载旧版本docke
+```
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+```
+
+### 2.2 配置仓库
 - 安装yum-utils（提供yum-config-manager工具）、device-mapper-persistent-data和lvm2（是devicemapper存储驱动的依赖）。 
 ```
   sudo yum install -y yum-utils \
@@ -23,7 +35,7 @@ sudo yum-config-manager \
     --add-repo \
     http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 ```   
-### 2.2 安装最新版Docker ce
+### 2.3 安装最新版Docker ce
 - 将软件包信息缓存到本地（为了提高搜索安装软件的速度）
 ```
    yum makecache fast
@@ -89,7 +101,7 @@ For more examples and ideas, visit:
 
 ## 4 安装指定版本Docker
 ### 4.1 搜索可安装版本
-在执行2.1节的步骤之后，执行下面命令，查看可以安装的docker版本   
+在执行2.2节的步骤之后，执行下面命令，查看可以安装的docker版本   
 ```
 [root@localhost yum.repos.d]# yum list docker-ce --showduplicates|sort -r
  * updates: mirrors.aliyun.com
@@ -149,8 +161,24 @@ docker.x86_64             2:1.13.1-102.git7f2769b.el7.centos              extras
 Available Packages
 
 ```   
-### 安装指定版本
-若是要安装docker 1.13.1.109，则代替2.2节内容执行下面命令，其余步骤与上面相同
+### 4.2 安装指定版本
+- 若是要安装docker 1.13.1.109，则代替2.3节内容执行下面命令，其余步骤与上面相同
 ```
-yum -y install docker-1.13.1
+$ yum -y install docker-1.13.1
+$ docker version
+Client:
+ Version:         1.13.1
+ API version:     1.26
+ Package version: 
+```  
+- 若是出现下面问题，则是docker未启动。
+```
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? 
+```  
+- 启动docker，并设置未开机自启动。
+```
+$ systemctl start docker
+
+$ systemctl enable docker
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
 ```

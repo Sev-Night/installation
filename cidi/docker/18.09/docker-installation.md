@@ -85,3 +85,72 @@ For more examples and ideas, visit:
 ```  
 至此，简单的安装部署已结束。   
 [官方安装地址](https://docs.docker.com/install/linux/docker-ce/centos/)
+
+
+## 4 安装指定版本Docker
+### 4.1 搜索可安装版本
+在执行2.1节的步骤之后，执行下面命令，查看可以安装的docker版本   
+```
+[root@localhost yum.repos.d]# yum list docker-ce --showduplicates|sort -r
+ * updates: mirrors.aliyun.com
+Loading mirror speeds from cached hostfile
+Loaded plugins: fastestmirror
+Installed Packages
+ * extras: mirrors.aliyun.com
+docker-ce.x86_64            3:19.03.8-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.8-3.el7                    @docker-ce-stable
+docker-ce.x86_64            3:19.03.7-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.6-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.5-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.4-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.3-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.2-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.1-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:19.03.0-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.9-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.8-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.7-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.6-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.5-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.4-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.3-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.2-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.1-3.el7                    docker-ce-stable 
+docker-ce.x86_64            3:18.09.0-3.el7                    docker-ce-stable 
+docker-ce.x86_64            18.06.3.ce-3.el7                   docker-ce-stable 
+docker-ce.x86_64            18.06.2.ce-3.el7                   docker-ce-stable 
+docker-ce.x86_64            18.06.1.ce-3.el7                   docker-ce-stable 
+docker-ce.x86_64            18.06.0.ce-3.el7                   docker-ce-stable 
+docker-ce.x86_64            18.03.1.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            18.03.0.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.12.1.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.12.0.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.09.1.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.09.0.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.06.2.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.06.1.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.06.0.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.03.3.ce-1.el7                   docker-ce-stable 
+docker-ce.x86_64            17.03.2.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.03.1.ce-1.el7.centos            docker-ce-stable 
+docker-ce.x86_64            17.03.0.ce-1.el7.centos            docker-ce-stable 
+ * base: mirrors.aliyun.com
+Available Packages
+[root@localhost yum.repos.d]# yum list docker --showduplicates|sort -r
+ * updates: mirrors.aliyun.com
+Loading mirror speeds from cached hostfile
+Loaded plugins: fastestmirror
+ * extras: mirrors.aliyun.com
+docker.x86_64             2:1.13.1-109.gitcccb291.el7.centos              extras
+docker.x86_64             2:1.13.1-108.git4ef4b30.el7.centos              extras
+docker.x86_64             2:1.13.1-103.git7f2769b.el7.centos              extras
+docker.x86_64             2:1.13.1-102.git7f2769b.el7.centos              extras
+ * base: mirrors.aliyun.com
+Available Packages
+
+```   
+### 安装指定版本
+若是要安装docker 1.13.1.109，则代替2.2节内容执行下面命令，其余步骤与上面相同
+```
+yum -y install docker-1.13.1
+```

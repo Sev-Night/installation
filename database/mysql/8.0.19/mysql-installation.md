@@ -126,7 +126,7 @@ $ docker run --name mysql \
     -p 3306:3306
     -v /opt/data/mysql:/var/lib/mysql \
     -v /opt/config/mysql:/etc/mysql/conf.d \
-    -e MYSQL_ROOT_PASSWORD=HuangNing11! \
+    -e MYSQL_ROOT_PASSWORD=Mypassword! \
     -d mysql:latest
 ```   
 说明：  

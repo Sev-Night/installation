@@ -138,7 +138,7 @@ $ docker run --name mysql \
 
 
 ### 官方安装文档
-[压缩包官方安装文档](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html)
+[压缩包官方安装文档](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html)   
 [容器官方安装文档](https://hub.docker.com/_/mysql)
 
 ## 补充Mysql配置文档模板   
